@@ -177,7 +177,7 @@ std::string getNameEntry(X509_NAME* name, int nid)
 std::time_t asn1TimeToTimet(
         const ASN1_TIME* asn1Time)
 {
-    static_assert(sizeof(std::time_t) >= sizeof(int64_t), "std::time_t size too small, the dates may overflow");
+    //static_assert(sizeof(std::time_t) >= sizeof(int64_t), "std::time_t size too small, the dates may overflow");
     static constexpr int64_t SECONDS_IN_A_DAY = 24 * 60 * 60;
 
     int pday;
@@ -192,7 +192,7 @@ std::time_t asn1TimeToTimet(
         throw FormatException(getLastError());
     }
 
-    return resultTime + pday * SECONDS_IN_A_DAY + psec;
+    return time_t(resultTime + pday * SECONDS_IN_A_DAY + psec);
 }
 
 // Converts a pair of ASN1_TIME time points into a struct wrapping standard time points

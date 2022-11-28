@@ -26,14 +26,14 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-BUILD_TESTS=${BUILD_TESTS:-ON}
+BUILD_TESTS=${BUILD_TESTS:-OFF}
 BUILD_DOCS=${BUILD_DOCS:-OFF}
 
 mkdir -p cmake-build-debug && pushd cmake-build-debug &&
 cmake ../ -DBUILD_DOCS=$BUILD_DOCS \
           -DBUILD_TESTS=$BUILD_TESTS \
-          -DCMAKE_C_COMPILER=clang \
-          -DCMAKE_CXX_COMPILER=clang++ \
+          -DCMAKE_C_COMPILER=powerpc-linux-gnu-gcc-7 \
+          -DCMAKE_CXX_COMPILER=powerpc-linux-gnu-g++-7 \
           -DCMAKE_BUILD_TYPE=Debug \
           -G "CodeBlocks - Unix Makefiles" \
           "$@" \

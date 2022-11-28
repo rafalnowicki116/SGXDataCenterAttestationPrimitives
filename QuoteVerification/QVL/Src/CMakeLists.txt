@@ -176,13 +176,14 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU
 		endif()
 		set(IGNORED_WARNINGS
 				"-Wno-gnu-statement-expression" #warns about __FILE__, __LINE__, etc. compiler macros
-				"-Wno-c++98-compat"             #family of warnings indicating this code may cause errors if compiled with C++98 compiler
+				"-Wno-c++98-compat"
+				"-Wconversion"             #family of warnings indicating this code may cause errors if compiled with C++98 compiler
 				"-Wno-c++98-compat-pedantic"    #same as above
 				"-Wno-used-but-marked-unused"   #detects when a variable is marked as unsued (preprocessor macro or other) and warns if it is used despite that [note: triggers warnings in UT]
 				"-Wno-zero-as-null-pointer-constant" #zero as null pointer constant, mainly for openssl which widely uses 0 for null
 				"-Wno-undefined-var-template"     #visible after upgrading to C++17, does not seem to be a big problem but, TODO investigate on how a proper fix should look like
 				"-Wno-undefined-func-template"    #visible after upgrading to C++17, does not seem to be a big problem but, TODO investigate on how a proper fix should look like
-				)
+				"-Wno-sign-compare")
 		set(CMAKE_CXX_FLAGS_CLANG
 				"-fcolor-diagnostics"           #clang coloured output
 				"-fwrapv"                       #Treat signed integer overflow as two’s complement
@@ -204,7 +205,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU
 	endif()
 	set(CMAKE_C_FLAGS
 			"-fpic"                         #Position Independent Execution (PIE)
-			"-fstack-protector-strong"      #stack-based buffer overrun detection
+			# "-fstack-protector-strong"      #stack-based buffer overrun detection
 			"-Werror"                       #make all warnings into errors
 			"-Wall"                         #enable all warnings
 			"-Wextra"
@@ -226,6 +227,8 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU
 			"-Wcast-align"
 			"-Wcast-qual"
 			"-Wredundant-decls"
+			"-Wno-sign-compare"
+			"-Wno-conversion"
 			)
 	if(NOT DEFINED SANITIZE_FLAGS)
 		set(SANITIZE_FLAGS

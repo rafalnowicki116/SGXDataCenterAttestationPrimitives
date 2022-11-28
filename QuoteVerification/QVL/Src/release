@@ -27,16 +27,16 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-BUILD_ATTESTATION_APP=ON
-BUILD_TESTS=ON
+BUILD_ATTESTATION_APP=OFF
+BUILD_TESTS=OFF
 BUILD_DOCS=OFF
 
 mkdir -p cmake-build-release && pushd cmake-build-release &&
 cmake ../ -DBUILD_DOCS=$BUILD_DOCS \
           -DBUILD_ATTESTATION_APP=$BUILD_ATTESTATION_APP \
           -DBUILD_TESTS=$BUILD_TESTS \
-          -DCMAKE_C_COMPILER=clang \
-          -DCMAKE_CXX_COMPILER=clang++ \
+          -DCMAKE_C_COMPILER=powerpc-linux-gnu-gcc-7 \
+          -DCMAKE_CXX_COMPILER=powerpc-linux-gnu-g++-7 \
           -DCMAKE_BUILD_TYPE=Release \
           -G "CodeBlocks - Unix Makefiles" \
           "$@" \
