@@ -28,8 +28,8 @@ cmake_minimum_required(VERSION 3.12)
 
 project(AttestationCommons CXX)
 
-hunter_add_package(OpenSSL)
-find_package(OpenSSL 1.1.1 EXACT REQUIRED)
+# hunter_add_package(OpenSSL)
+# find_package(OpenSSL 1.1.1 EXACT REQUIRED)
 
 file(GLOB SOURCE_FILES src/*.cpp
         src/Utils/*.cpp
@@ -48,13 +48,13 @@ include_directories(
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        # OpenSSL::SSL
+        # OpenSSL::Crypto
 )
 
 target_link_libraries(${PROJECT_NAME}Static PUBLIC
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        # OpenSSL::SSL
+        # OpenSSL::Crypto
 )
 
 ######### QVL Enclave related settings #################################################################################

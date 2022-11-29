@@ -49,8 +49,14 @@ if(BUILD_DOCS)
     install(DIRECTORY ${DOXYGEN_BUILD_DIR}/ DESTINATION doc)
 endif()
 
-hunter_add_package(OpenSSL)
-find_package(OpenSSL 1.1.1 EXACT REQUIRED)
+# hunter_add_package(OpenSSL)
+# find_package(OpenSSL 1.1.1 EXACT REQUIRED)
+set(CUSTOM_INCLUDE_OPENSSL "/OpenSSL/openssl-1.1.1j/include")
+set(CUSTOM_LIB_OPENSSL_LIBSSL_STATIC "/OpenSSL/openssl-1.1.1j/libssl.a")
+set(CUSTOM_LIB_OPENSSL_LIBCRYPTO_STATIC "/OpenSSL/openssl-1.1.1j/libcrypto.a")
+
+set(CUSTOM_LIB_OPENSSL_LIBSSL_SHARED "/OpenSSL/openssl-1.1.1j/libssl.so")
+set(CUSTOM_LIB_OPENSSL_LIBCRYPTO_SHARED "/OpenSSL/openssl-1.1.1j/libcrypto.so")
 
 file(GLOB SOURCE_FILES src/*.cpp
         src/OpensslHelpers/*.cpp
@@ -73,22 +79,23 @@ include_directories(
         ${ATTESTATION_PARSERS_API_INCLUDE}
         ${PROJECT_SOURCE_DIR}/include
         ${PROJECT_SOURCE_DIR}/src
+        ${CUSTOM_INCLUDE_OPENSSL}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         AttestationCommonsStatic
         AttestationParsersStatic
         rapidjson
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        ${CUSTOM_LIB_OPENSSL_LIBSSL_SHARED}
+        ${CUSTOM_LIB_OPENSSL_LIBCRYPTO_SHARED}
         )
 
 target_link_libraries(${PROJECT_NAME}Static PRIVATE
         AttestationCommonsStatic
         AttestationParsersStatic
         rapidjson
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        ${CUSTOM_LIB_OPENSSL_LIBSSL_STATIC}
+        ${CUSTOM_LIB_OPENSSL_LIBCRYPTO_STATIC}
         )
 
 if(MSVC)

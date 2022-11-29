@@ -41,5 +41,4 @@ cmake ../ -DBUILD_DOCS=$BUILD_DOCS \
           -G "CodeBlocks - Unix Makefiles" \
           "$@" \
           && make -j6 && make install &&
-
 popd

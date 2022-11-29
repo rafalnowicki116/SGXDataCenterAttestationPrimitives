@@ -49,8 +49,14 @@ if(BUILD_DOCS)
     install(DIRECTORY ${DOXYGEN_BUILD_DIR}/ DESTINATION doc)
 endif()
 
-hunter_add_package(OpenSSL)
-find_package(OpenSSL 1.1.1 EXACT REQUIRED)
+# hunter_add_package(OpenSSL)
+# find_package(OpenSSL 1.1.1 EXACT REQUIRED)
+set(CUSTOM_INCLUDE_OPENSSL "/OpenSSL/openssl-1.1.1j/include")
+set(CUSTOM_LIB_OPENSSL_LIBSSL_STATIC "/OpenSSL/openssl-1.1.1j/libssl.a")
+set(CUSTOM_LIB_OPENSSL_LIBCRYPTO_STATIC "/OpenSSL/openssl-1.1.1j/libcrypto.a")
+
+set(CUSTOM_LIB_OPENSSL_LIBSSL_SHARED "/OpenSSL/openssl-1.1.1j/libssl.so")
+set(CUSTOM_LIB_OPENSSL_LIBCRYPTO_SHARED "/OpenSSL/openssl-1.1.1j/libcrypto.so")
 
 file(GLOB SOURCE_FILES src/*.cpp
         src/Json/*.cpp
@@ -64,26 +70,28 @@ add_library(${PROJECT_NAME}Static STATIC ${SOURCE_FILES})
 set(ATTESTATION_PARSERS_API_INCLUDE ${PROJECT_SOURCE_DIR}/include CACHE INTERNAL "${PROJECT_NAME} API")
 
 include_directories(
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>        
         $<INSTALL_INTERFACE:include>
         ${DCAP_API_INCLUDE}
         ${PROJECT_SOURCE_DIR}/src
-        ${ATTESTATION_COMMONS_API_INCLUDE}
+        ${ATTESTATION_COMMONS_API_INCLUDE}        
+        ${CUSTOM_INCLUDE_OPENSSL}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
         AttestationCommonsStatic
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        ${CUSTOM_LIB_OPENSSL_LIBSSL_SHARED}
+        ${CUSTOM_LIB_OPENSSL_LIBCRYPTO_SHARED}
         rapidjson
         )
 
 target_link_libraries(${PROJECT_NAME}Static PUBLIC
         AttestationCommonsStatic
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        ${CUSTOM_LIB_OPENSSL_LIBSSL}
+        ${CUSTOM_LIB_OPENSSL_LIBCRYPTO}
         rapidjson
         )
+
 
 ######### QVL Enclave related settings #################################################################################
 
